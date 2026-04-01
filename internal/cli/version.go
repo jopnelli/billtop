@@ -12,9 +12,10 @@ func newVersionCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Print billtop version information",
 		Run: func(cmd *cobra.Command, _ []string) {
-			fmt.Fprintf(cmd.OutOrStdout(), "billtop %s\n", version.Version)
-			fmt.Fprintf(cmd.OutOrStdout(), "  commit: %s\n", version.Commit)
-			fmt.Fprintf(cmd.OutOrStdout(), "  built:  %s\n", version.Date)
+			w := cmd.OutOrStdout()
+			_, _ = fmt.Fprintf(w, "billtop %s\n", version.Version)
+			_, _ = fmt.Fprintf(w, "  commit: %s\n", version.Commit)
+			_, _ = fmt.Fprintf(w, "  built:  %s\n", version.Date)
 		},
 	}
 }

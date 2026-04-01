@@ -5,6 +5,8 @@ import "time"
 
 // CostRecord represents a single line item from the GCP billing export.
 type CostRecord struct {
+	Labels           map[string]string
+	Credits          []Credit
 	BillingAccountID string
 	ProjectID        string
 	ProjectName      string
@@ -14,38 +16,36 @@ type CostRecord struct {
 	SKUDescription   string
 	Region           string
 	Zone             string
+	Currency         string
+	ResourceName     string
 	UsageStartTime   time.Time
 	UsageEndTime     time.Time
 	Cost             float64
-	Currency         string
-	Credits          []Credit
-	Labels           map[string]string
-	ResourceName     string
 }
 
 // Credit represents a discount or credit applied to a cost record.
 type Credit struct {
 	Name   string
-	Amount float64
 	Type   string // e.g., "SUSTAINED_USAGE_DISCOUNT", "COMMITTED_USAGE_DISCOUNT", "PROMOTION"
+	Amount float64
 }
 
 // ServiceCost is an aggregated cost for a single GCP service.
 type ServiceCost struct {
 	ServiceName  string
+	Currency     string
 	GrossCost    float64
 	TotalCredits float64
 	NetCost      float64
-	Currency     string
 }
 
 // ProjectCost is an aggregated cost for a single GCP project.
 type ProjectCost struct {
 	ProjectID   string
 	ProjectName string
+	Currency    string
 	GrossCost   float64
 	NetCost     float64
-	Currency    string
 }
 
 // Period defines a time range for cost queries.
