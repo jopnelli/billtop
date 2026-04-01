@@ -1,6 +1,6 @@
 # Binaries
-billtop
-billtop-*
+/billtop
+/billtop-*
 *.exe
 dist/
 
