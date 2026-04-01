@@ -1,0 +1,10 @@
+{
+	"name": "@billtop/web",
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"build": "echo 'web build not yet configured'",
+		"test": "echo 'no web tests yet'",
+		"typecheck": "echo 'web typecheck not yet configured'"
+	}
+}

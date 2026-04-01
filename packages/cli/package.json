@@ -1,0 +1,20 @@
+{
+	"name": "@billtop/cli",
+	"version": "0.0.1",
+	"type": "module",
+	"bin": {
+		"billtop": "src/index.ts"
+	},
+	"scripts": {
+		"build": "bun build src/index.ts --outdir dist --target bun",
+		"test": "bun test",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@billtop/core": "workspace:*",
+		"commander": "^13.0.0"
+	},
+	"devDependencies": {
+		"typescript": "^5.7.0"
+	}
+}
