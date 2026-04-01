@@ -41,13 +41,12 @@ describe("billtopConfigSchema", () => {
 		expect(result.datasetLocation).toBe("EU");
 	});
 
-	test("rejects unknown dataset location", () => {
-		expect(() =>
-			billtopConfigSchema.parse({
-				projectId: "my-project",
-				billingAccountId: "AABBCC-DDEEFF-001122",
-				datasetLocation: "asia",
-			}),
-		).toThrow();
+	test("accepts regional dataset location", () => {
+		const result = billtopConfigSchema.parse({
+			projectId: "my-project",
+			billingAccountId: "AABBCC-DDEEFF-001122",
+			datasetLocation: "europe-west1",
+		});
+		expect(result.datasetLocation).toBe("europe-west1");
 	});
 });

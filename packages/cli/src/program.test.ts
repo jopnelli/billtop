@@ -20,8 +20,8 @@ describe("createProgram", () => {
 
 		try {
 			program.parse(["--version"], { from: "user" });
-		} catch (e) {
-			// commander throws on --version with exitOverride
+		} catch (e: unknown) {
+			if (!(e instanceof Error && e.constructor.name === "CommanderError")) throw e;
 		}
 
 		expect(output).toMatch(/^\d+\.\d+\.\d+/);
