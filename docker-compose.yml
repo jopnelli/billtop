@@ -1,0 +1,18 @@
+services:
+  billtop:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/credentials/adc.json
+    volumes:
+      - billtop-cache:/home/nonroot/.billtop
+      - ${GOOGLE_APPLICATION_CREDENTIALS:-~/.config/gcloud/application_default_credentials.json}:/credentials/adc.json:ro
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  billtop-cache:

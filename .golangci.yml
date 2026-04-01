@@ -1,0 +1,29 @@
+version: "2"
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - gosec
+    - bodyclose
+    - noctx
+    - sqlclosecheck
+    - gocritic
+    - errorlint
+    - misspell
+    - copyloopvar
+
+  settings:
+    govet:
+      enable-all: true
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+    gosec:
+      excludes: []
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

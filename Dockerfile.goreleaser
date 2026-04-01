@@ -1,0 +1,6 @@
+FROM gcr.io/distroless/static-debian12:nonroot
+
+COPY billtop /billtop
+
+USER 65534:65534
+ENTRYPOINT ["/billtop"]

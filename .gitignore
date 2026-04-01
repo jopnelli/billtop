@@ -1,0 +1,30 @@
+# Binaries
+billtop
+billtop-*
+*.exe
+dist/
+
+# Go
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+coverage.out
+coverage.html
+
+# Local config (users create their own)
+.billtop/
+
+# Frontend build
+web/dist/
+web/node_modules/

@@ -1,0 +1,73 @@
+version: 2
+
+project_name: billtop
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./cmd/billtop
+    binary: billtop
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/jopnelli/billtop/internal/version.Version={{.Version}}
+      - -X github.com/jopnelli/billtop/internal/version.Commit={{.Commit}}
+      - -X github.com/jopnelli/billtop/internal/version.Date={{.Date}}
+
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+dockers:
+  - image_templates:
+      - "ghcr.io/jopnelli/billtop:{{ .Version }}-amd64"
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/amd64"
+    goarch: amd64
+    dockerfile: Dockerfile.goreleaser
+  - image_templates:
+      - "ghcr.io/jopnelli/billtop:{{ .Version }}-arm64"
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/arm64"
+    goarch: arm64
+    dockerfile: Dockerfile.goreleaser
+
+docker_manifests:
+  - name_template: "ghcr.io/jopnelli/billtop:{{ .Version }}"
+    image_templates:
+      - "ghcr.io/jopnelli/billtop:{{ .Version }}-amd64"
+      - "ghcr.io/jopnelli/billtop:{{ .Version }}-arm64"
+  - name_template: "ghcr.io/jopnelli/billtop:latest"
+    image_templates:
+      - "ghcr.io/jopnelli/billtop:{{ .Version }}-amd64"
+      - "ghcr.io/jopnelli/billtop:{{ .Version }}-arm64"
+
+signs:
+  - cmd: cosign
+    artifacts: checksum
+    args:
+      - sign-blob
+      - "--yes"
+      - "--output-signature=${signature}"
+      - "${artifact}"
+
+sboms:
+  - artifacts: archive
+    cmd: syft
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  use: github-native
